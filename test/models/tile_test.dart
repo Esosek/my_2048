@@ -13,26 +13,25 @@ void main() {
       expect(tile.value, value);
     });
 
-    test('copyWith should create a Tile with the same id and updated value',
-        () {
-      const oldValue = 2;
-      const newValue = 4;
-      final originalTile = Tile(oldValue);
-      final copiedTile = originalTile.copyWith(newValue);
+    test('should create unique ids for different tiles', () {
+      final tile1 = Tile(2);
+      final tile2 = Tile(2);
 
-      expect(copiedTile.id, originalTile.id);
-      expect(copiedTile.value, newValue);
+      expect(tile1.id, isNot(equals(tile2.id)));
     });
 
-    test(
-        'copyWith should create a Tile with the same id and same value if null is provided',
-        () {
-      const oldValue = 2;
-      final originalTile = Tile(oldValue);
-      final copiedTile = originalTile.copyWith(null);
+    test('should return the correct value', () {
+      final tile = Tile(2);
 
-      expect(copiedTile.id, originalTile.id);
-      expect(copiedTile.value, oldValue);
+      expect(tile.value, equals(2));
+    });
+
+    test('should allow updating the value', () {
+      final tile = Tile(2);
+      const newValue = 4;
+      tile.value = newValue;
+
+      expect(tile.value, equals(newValue));
     });
   });
 }
