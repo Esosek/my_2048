@@ -5,8 +5,22 @@ class BoardTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Card(
-      color: Color.fromARGB(255, 213, 205, 196),
+    return Card(
+      color: const Color.fromARGB(255, 238, 227, 218),
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: FittedBox(
+          alignment: Alignment.center,
+          fit: BoxFit.scaleDown,
+          child: Text(
+            '2',
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  color: const Color.fromARGB(255, 118, 109, 101),
+                  fontSize: 34,
+                ),
+          ),
+        ),
+      ),
     );
   }
 }
