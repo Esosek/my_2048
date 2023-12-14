@@ -11,9 +11,9 @@ class GameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: const Color.fromARGB(255, 250, 248, 239),
+      backgroundColor: Color.fromARGB(255, 250, 248, 239),
       body: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -23,7 +23,7 @@ class GameScreen extends StatelessWidget {
                   Expanded(
                     child: ScoreCounter(),
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   Expanded(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -35,7 +35,7 @@ class GameScreen extends StatelessWidget {
                             value: '8',
                           ),
                         ),
-                        const SizedBox(height: 2),
+                        SizedBox(height: 2),
                         Row(
                           children: [
                             Expanded(
@@ -44,7 +44,7 @@ class GameScreen extends StatelessWidget {
                                 value: '0',
                               ),
                             ),
-                            const SizedBox(width: 8),
+                            SizedBox(width: 8),
                             ResetButton()
                           ],
                         ),
@@ -53,7 +53,7 @@ class GameScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Board(),
             ],
           )),

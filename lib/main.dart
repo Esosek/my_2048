@@ -33,11 +33,20 @@ class MainApp extends StatelessWidget {
             size: 35,
           ),
           textTheme: GoogleFonts.robotoTextTheme().copyWith(
+            labelLarge:
+                GoogleFonts.robotoCondensedTextTheme().labelLarge!.copyWith(
+                      color: const Color.fromARGB(255, 210, 202, 192),
+                      fontSize: 24,
+                    ),
             labelMedium:
                 GoogleFonts.robotoCondensedTextTheme().labelMedium!.copyWith(
                       color: const Color.fromARGB(255, 210, 202, 192),
                       fontSize: 12,
                     ),
+            bodyLarge: GoogleFonts.robotoTextTheme().bodyLarge!.copyWith(
+                  color: _theme.colorScheme.onPrimary,
+                  fontSize: 26,
+                ),
             bodyMedium: GoogleFonts.robotoTextTheme().bodyMedium!.copyWith(
                   color: _theme.colorScheme.onPrimary,
                   fontSize: 18,
