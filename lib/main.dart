@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:my_2048/screens/game_screen.dart';
+
 final _theme = ThemeData.light().copyWith(
-  textTheme: GoogleFonts.robotoTextTheme(),
+  iconTheme: const IconThemeData().copyWith(
+    color: Colors.white,
+    size: 35,
+  ),
+  textTheme: GoogleFonts.robotoTextTheme().copyWith(
+    bodyMedium: GoogleFonts.robotoTextTheme().bodyMedium!.copyWith(
+          color: Colors.white,
+        ),
+  ),
 );
 
 void main() {
@@ -16,12 +25,10 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: _theme,
-      home: const Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+    return ProviderScope(
+      child: MaterialApp(
+        theme: _theme,
+        home: const GameScreen(),
       ),
     );
   }
