@@ -35,7 +35,7 @@ class GameScreen extends StatelessWidget {
                             value: '8',
                           ),
                         ),
-                        SizedBox(height: 2),
+                        SizedBox(height: 4),
                         Row(
                           children: [
                             Expanded(

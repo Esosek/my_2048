@@ -25,7 +25,7 @@ class MainApp extends StatelessWidget {
           cardTheme: const CardTheme().copyWith(
             color: const Color.fromARGB(255, 187, 172, 160),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(7),
+              borderRadius: BorderRadius.circular(5),
             ),
           ),
           iconTheme: const IconThemeData().copyWith(

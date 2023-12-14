@@ -14,7 +14,7 @@ class ScoreCounter extends StatelessWidget {
         Text(
           '57567',
           style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                color: Theme.of(context).colorScheme.onBackground,
+                color: const Color.fromARGB(255, 118, 109, 101),
                 fontWeight: FontWeight.w600,
               ),
         ),
