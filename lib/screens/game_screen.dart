@@ -20,22 +20,37 @@ class GameScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ScoreCounter(),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SmallCounter(),
-                          const SizedBox(height: 4),
-                          SmallCounter(),
-                        ],
-                      ),
-                      SizedBox(width: 8),
-                      ResetButton(),
-                    ],
-                  )
+                  Expanded(
+                    child: ScoreCounter(),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          child: SmallCounter(
+                            title: 'Best score',
+                            value: '8',
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: SmallCounter(
+                                title: 'Moves',
+                                value: '0',
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            ResetButton()
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 8),
