@@ -9,6 +9,8 @@ class Tile {
 
   Color get backgroundColor {
     switch (value) {
+      case 0:
+        return const Color.fromARGB(255, 213, 205, 196);
       case 2:
         return const Color.fromARGB(255, 238, 227, 218);
       case 4:
@@ -32,7 +34,8 @@ class Tile {
       case 2048:
         return const Color.fromARGB(255, 237, 194, 45);
       default:
-        return const Color.fromARGB(255, 213, 205, 196);
+        // Dark color for values above 2048
+        return const Color.fromARGB(255, 60, 58, 50);
     }
   }
 }
