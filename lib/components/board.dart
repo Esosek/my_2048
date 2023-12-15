@@ -8,7 +8,7 @@ class Board extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
+      width: MediaQuery.of(context).size.width > 400 ? 400 : double.infinity,
       child: Card(
         child: GridView.count(
           shrinkWrap: true,

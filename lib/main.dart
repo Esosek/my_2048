@@ -11,7 +11,7 @@ final _theme = ThemeData.light().copyWith(
 );
 
 void main() {
-  runApp(const ProviderScope(child: MainApp()));
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
