@@ -14,7 +14,7 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  bool _isGameOver = true;
+  bool _isGameOver = false;
 
   @override
   Widget build(BuildContext context) {
