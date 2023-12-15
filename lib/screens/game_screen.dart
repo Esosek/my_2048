@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:my_2048/components/board.dart';
 import 'package:my_2048/components/end_overlay.dart';
 import 'package:my_2048/components/reset_button.dart';
 import 'package:my_2048/components/score_counter.dart';
 import 'package:my_2048/components/small_counter.dart';
+import 'package:my_2048/providers/game_state_provider.dart';
 
-class GameScreen extends StatefulWidget {
+class GameScreen extends ConsumerWidget {
   const GameScreen({super.key});
 
   @override
-  State<GameScreen> createState() => _GameScreenState();
-}
-
-class _GameScreenState extends State<GameScreen> {
-  bool _isGameOver = false;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final gameState = ref.watch(gameStateProvider);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 250, 248, 239),
       body: Padding(
@@ -53,7 +49,7 @@ class _GameScreenState extends State<GameScreen> {
                               ),
                             ),
                             SizedBox(width: 8),
-                            ResetButton()
+                            ResetButton(),
                           ],
                         ),
                       ],
@@ -66,7 +62,7 @@ class _GameScreenState extends State<GameScreen> {
                 alignment: Alignment.center,
                 children: [
                   const Board(),
-                  if (_isGameOver) const EndOverlay(),
+                  if (gameState == GameState.ended) const EndOverlay(),
                 ],
               ),
             ],
