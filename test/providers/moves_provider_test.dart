@@ -20,7 +20,7 @@ void main() {
 
     test('correctly increments moves by 1', () {
       final sut = setProvider();
-      sut.read(movesProvider.notifier).add();
+      sut.read(movesProvider.notifier).addMove();
 
       expect(sut.read(movesProvider), equals(1));
     });
@@ -28,10 +28,10 @@ void main() {
     test('correctly reset moves to 0', () {
       final sut = setProvider();
       // First set the the moves to 1
-      sut.read(movesProvider.notifier).add();
+      sut.read(movesProvider.notifier).addMove();
       expect(sut.read(movesProvider), equals(1));
 
-      sut.read(movesProvider.notifier).reset();
+      sut.read(movesProvider.notifier).resetMoves();
 
       expect(sut.read(movesProvider), equals(0));
     });
