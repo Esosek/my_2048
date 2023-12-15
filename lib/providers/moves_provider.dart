@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class MovesNotifier extends StateNotifier<int> {
   MovesNotifier() : super(0);
 
-  void increment() => state += state;
+  void add() => state += 1;
   void reset() => state = 0;
 }
 
