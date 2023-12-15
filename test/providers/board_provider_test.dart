@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:my_2048/providers/board_provider.dart';
 
 void main() {
-  group('BoardProvider', () {
+  group('BoardNotifier', () {
     test('board is generated with two tiles, each with value 2 or 4', () {
       final container = ProviderContainer();
       addTearDown(() => container.dispose());

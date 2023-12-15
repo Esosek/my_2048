@@ -15,11 +15,9 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
 
   // Prepares a new board with 2 non-empty tiles
   void initializeBoard() {
-    final tilesList = List.generate(16, (_) => Tile(0));
+    state = List.generate(16, (_) => Tile(0));
     _generateNewTile();
     _generateNewTile();
-
-    state = tilesList;
 
     _log.info('Board initialized');
   }
@@ -31,8 +29,13 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
       final tile = _randomEmptyTile;
       tile.value = generatedValue;
 
+      // Notify listeners
+      state = [...state];
+
       _log.trace(
           'Tile generated with index: ${state.indexOf(tile)} and value: $generatedValue');
+
+      _checkGameOver();
     } catch (error) {
       _log.error(error.toString());
     }
@@ -47,6 +50,10 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
 
     final index = _random.nextInt(emptyTiles.length);
     return emptyTiles[index];
+  }
+
+  void _checkGameOver() {
+    // TODO: Implement checkGameOver
   }
 }
 
