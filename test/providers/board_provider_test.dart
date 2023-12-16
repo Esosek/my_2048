@@ -20,5 +20,7 @@ void main() {
         expect(tile.value, anyOf(2, 4));
       }
     });
+
+    // TODO: Implement moveTiles test
   });
 }

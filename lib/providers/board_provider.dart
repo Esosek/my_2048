@@ -22,6 +22,11 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
     _log.info('Board initialized');
   }
 
+  void moveTiles(MoveDirection direction) {
+    // TODO: Implement moveTiles
+    _log.trace('User swiped $direction');
+  }
+
   void _generateNewTile() {
     // 75% for 2 and 25% chance for 4
     final generatedValue = _random.nextDouble() < 0.75 ? 2 : 4;
