@@ -36,7 +36,7 @@ void main() {
       final scoreProviderNotifier =
           providerContainer.read(scoreProvider.notifier);
 
-      // Change provider values to test UI is updated correctly
+      // Change provider values to test if UI is updated correctly
       providerContainer.read(movesProvider.notifier).addMove();
       scoreProviderNotifier.addScore(8);
       scoreProviderNotifier.updateBestScore();
@@ -55,8 +55,8 @@ void main() {
           .map((widget) => widget.data)
           .toList();
 
-      expect(smallCounterTexts, contains('8'));
-      expect(smallCounterTexts, contains('1'));
+      expect(smallCounterTexts, contains('8')); // Best score counter
+      expect(smallCounterTexts, contains('1')); // Moves counter
     });
 
     testWidgets('always renders ScoreCounter and Board', (widgetTester) async {
