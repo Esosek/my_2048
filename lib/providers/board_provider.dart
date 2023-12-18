@@ -10,7 +10,9 @@ import 'package:my_2048/utilities/move_resolver.dart';
 enum MoveDirection { up, down, right, left }
 
 class BoardProviderNotifier extends StateNotifier<List<Tile>> {
-  BoardProviderNotifier(this._ref) : super([]);
+  BoardProviderNotifier(this._ref) : super([]) {
+    initializeBoard();
+  }
 
   final StateNotifierProviderRef _ref;
 
