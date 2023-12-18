@@ -1,21 +1,32 @@
 import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_2048/providers/score_provider.dart';
 
 import 'package:my_2048/utilities/custom_logger.dart';
 import 'package:my_2048/models/tile.dart';
+import 'package:my_2048/utilities/move_resolver.dart';
 
 enum MoveDirection { up, down, right, left }
 
 class BoardProviderNotifier extends StateNotifier<List<Tile>> {
-  BoardProviderNotifier() : super([]);
+  BoardProviderNotifier(this._ref) : super([]);
+
+  final StateNotifierProviderRef _ref;
 
   final _log = CustomLogger('BoardProvider');
   final _random = Random();
+  final _moveResolver = const MoveResolver();
 
   // Prepares a new board with 2 non-empty tiles
   void initializeBoard() {
-    state = List.generate(16, (_) => Tile(0));
+    state = List.generate(
+      16,
+      (_) => Tile(
+        value: 0,
+        onMerge: (value) => _ref.read(scoreProvider.notifier).addScore(value),
+      ),
+    );
     _generateNewTile();
     _generateNewTile();
 
@@ -23,8 +34,8 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
   }
 
   void moveTiles(MoveDirection direction) {
-    // TODO: Implement moveTiles
     _log.trace('User swiped $direction');
+    state = _moveResolver.move(boardState: state, swipeDirection: direction);
   }
 
   void _generateNewTile() {
@@ -63,4 +74,4 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
 }
 
 final boardProvider = StateNotifierProvider<BoardProviderNotifier, List<Tile>>(
-    (ref) => BoardProviderNotifier());
+    (ref) => BoardProviderNotifier(ref));

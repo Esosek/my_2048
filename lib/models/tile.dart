@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 
 class Tile {
-  Tile(this.value) : id = const Uuid().v4();
+  Tile({
+    required this.value,
+    required this.onMerge,
+  });
 
-  final String id;
   int value;
+  final void Function(int) onMerge;
+
+  bool get isEmpty => value == 0;
+
+  void mergeTo(Tile tile) {
+    if (tile.value != value) {
+      return;
+    }
+
+    tile.value += value;
+    onMerge(value);
+    value = 0;
+  }
 
   Color get backgroundColor {
     switch (value) {
