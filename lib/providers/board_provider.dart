@@ -21,7 +21,6 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
 
   final _log = CustomLogger('BoardProvider');
   final _random = Random();
-  final _moveResolver = const MoveResolver();
 
   // Prepares a new board with 2 non-empty tiles
   void initializeBoard() {
@@ -40,7 +39,15 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
 
   void moveTiles(MoveDirection direction) {
     _log.trace('User swiped $direction');
-    state = _moveResolver.move(boardState: state, swipeDirection: direction);
+
+    final moveResolver = MoveResolver(
+      stateNotifierProviderRef: _ref,
+      board: state,
+      swipeDirection: direction,
+    );
+
+    state = moveResolver.move();
+    _generateNewTile();
   }
 
   void _generateNewTile() {
