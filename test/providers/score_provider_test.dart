@@ -11,9 +11,9 @@ void main() {
       (ref) => ScoreNotifier.test(initialValues),
     );
 
-    final sut = ProviderContainer();
-    addTearDown(() => sut.dispose());
-    return sut;
+    final providerContainer = ProviderContainer();
+    addTearDown(() => providerContainer.dispose());
+    return providerContainer;
   }
 
   group('ScoreNotifier', () {

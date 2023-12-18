@@ -37,8 +37,8 @@ class Board extends ConsumerWidget {
                 crossAxisCount: 4,
                 padding: const EdgeInsets.all(4),
                 physics: const NeverScrollableScrollPhysics(),
-                children:
-                    List.generate(16, (index) => BoardTile(gameTiles[index])),
+                children: List.generate(
+                    gameTiles.length, (index) => BoardTile(gameTiles[index])),
               ),
       ),
     );

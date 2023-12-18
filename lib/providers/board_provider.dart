@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_2048/providers/score_provider.dart';
 
+import 'package:my_2048/providers/score_provider.dart';
 import 'package:my_2048/utilities/custom_logger.dart';
 import 'package:my_2048/models/tile.dart';
 import 'package:my_2048/utilities/move_resolver.dart';
@@ -13,6 +13,9 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
   BoardProviderNotifier(this._ref) : super([]) {
     initializeBoard();
   }
+
+  // For unit test
+  BoardProviderNotifier.withEmptyValue(this._ref) : super([]);
 
   final StateNotifierProviderRef _ref;
 
