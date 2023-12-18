@@ -28,8 +28,8 @@ flutter_launcher_icons:
   image_path_ios: "assets/app_icon_full.png"
   android: true
   ios: true
-  adaptive_icon_background: "#EDC22D"
+  adaptive_icon_background: "#BBACA0"
   adaptive_icon_foreground: "assets/app_icon_transparent.png"
   min_sdk_android: 21
   remove_alpha_ios: true
-  background_color_ios: "#EDC22D"
+  background_color_ios: "#BBACA0"
