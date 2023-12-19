@@ -28,7 +28,7 @@ void main() {
     });
 
     test('correctly increments current score with provided value', () {
-      final sut = setProvider({Score.current: 2});
+      final sut = setProvider({Score.current: 2, Score.best: 2});
       final initialScore = sut.read(mockScoreProvider)[Score.current]!;
       const scoreIncrement = 4;
 
@@ -51,10 +51,10 @@ void main() {
     });
 
     test('updates best score only if current score is higher', () {
-      final sut = setProvider({Score.current: 10, Score.best: 8});
-      final score = sut.read(mockScoreProvider)[Score.current]!;
+      final sut = setProvider({Score.current: 8, Score.best: 8});
 
-      sut.read(mockScoreProvider.notifier).updateBestScore();
+      sut.read(mockScoreProvider.notifier).addScore(2);
+      final score = sut.read(mockScoreProvider)[Score.current]!;
 
       expect(sut.read(mockScoreProvider)[Score.best], equals(score));
     });
@@ -63,7 +63,7 @@ void main() {
       final sut = setProvider({Score.current: 6, Score.best: 8});
       final bestScore = sut.read(mockScoreProvider)[Score.best]!;
 
-      sut.read(mockScoreProvider.notifier).updateBestScore();
+      sut.read(mockScoreProvider.notifier).addScore(2);
 
       expect(sut.read(mockScoreProvider)[Score.best], equals(bestScore));
     });

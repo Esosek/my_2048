@@ -14,7 +14,6 @@ class GameStateNotifier extends StateNotifier<GameState> {
   final _log = CustomLogger('GameStateNotifier');
 
   void endGame() {
-    _ref.read(scoreProvider.notifier).updateBestScore();
     state = GameState.ended;
     _log.info('Game ended');
   }

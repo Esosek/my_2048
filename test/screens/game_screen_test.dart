@@ -39,7 +39,6 @@ void main() {
       // Change provider values to test if UI is updated correctly
       providerContainer.read(movesProvider.notifier).addMove();
       scoreProviderNotifier.addScore(8);
-      scoreProviderNotifier.updateBestScore();
       await widgetTester.pump();
 
       final smallCounterWidgets = find.byType(SmallCounter);

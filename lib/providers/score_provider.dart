@@ -14,6 +14,7 @@ class ScoreNotifier extends StateNotifier<Map<Score, int>> {
   void addScore(int value) {
     final updatedScore = state[Score.current]! + value;
     state = {...state, Score.current: updatedScore};
+    _updateBestScore();
 
     _log.trace('Current score increased to $updatedScore');
   }
@@ -23,7 +24,7 @@ class ScoreNotifier extends StateNotifier<Map<Score, int>> {
     _log.trace('Current score set to 0');
   }
 
-  void updateBestScore() {
+  void _updateBestScore() {
     final currentScore = state[Score.current]!;
 
     if (currentScore > state[Score.best]!) {
