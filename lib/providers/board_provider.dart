@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_2048/providers/moves_provider.dart';
 
-import 'package:my_2048/providers/score_provider.dart';
 import 'package:my_2048/utilities/custom_logger.dart';
 import 'package:my_2048/models/tile.dart';
 import 'package:my_2048/utilities/move_resolver.dart';
@@ -24,13 +24,8 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
 
   // Prepares a new board with 2 non-empty tiles
   void initializeBoard() {
-    state = List.generate(
-      16,
-      (_) => Tile(
-        value: 0,
-        onMerge: (value) => _ref.read(scoreProvider.notifier).addScore(value),
-      ),
-    );
+    state = List.filled(16, Tile(value: 0));
+
     _generateNewTile();
     _generateNewTile();
 
@@ -46,22 +41,28 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
       swipeDirection: direction,
     );
 
-    state = moveResolver.move();
-    _generateNewTile();
+    final boardAfterMove = moveResolver.move();
+
+    // Move successful
+    if (_didBoardChange(boardAfterMove)) {
+      state = boardAfterMove;
+      _ref.read(movesProvider.notifier).addMove();
+      _generateNewTile();
+    }
   }
 
   void _generateNewTile() {
     // 75% for 2 and 25% chance for 4
     final generatedValue = _random.nextDouble() < 0.75 ? 2 : 4;
     try {
-      final tile = _randomEmptyTile;
-      tile.value = generatedValue;
+      final emptyTileIndex = _randomEmptyTileIndex;
+      final newState = List<Tile>.from(state);
+      newState[emptyTileIndex] = Tile(value: generatedValue);
 
-      // Notify listeners
-      state = [...state];
+      state = newState;
 
       _log.trace(
-          'Tile generated with index: ${state.indexOf(tile)} and value: $generatedValue');
+          'Tile generated with index: $emptyTileIndex and value: $generatedValue');
 
       _checkGameOver();
     } catch (error) {
@@ -69,15 +70,27 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
     }
   }
 
-  Tile get _randomEmptyTile {
-    final emptyTiles = state.where((tile) => tile.value == 0).toList();
+  int get _randomEmptyTileIndex {
+    final emptyTileIndices = List<int>.generate(state.length, (index) => index)
+        .where((index) => state[index].isEmpty)
+        .toList();
 
-    if (emptyTiles.isEmpty) {
+    if (emptyTileIndices.isEmpty) {
       throw Exception('Could not find an empty tile');
     }
 
-    final index = _random.nextInt(emptyTiles.length);
-    return emptyTiles[index];
+    return emptyTileIndices[_random.nextInt(emptyTileIndices.length)];
+  }
+
+  bool _didBoardChange(List<Tile> newBoard) {
+    for (var i = 0; i < newBoard.length; i++) {
+      if (newBoard[i].value != state[i].value) {
+        _log.trace('Board did change');
+        return true;
+      }
+    }
+    _log.trace('Board did NOT change');
+    return false;
   }
 
   void _checkGameOver() {

@@ -1,25 +1,14 @@
 import 'package:flutter/material.dart';
 
 class Tile {
-  Tile({
-    required this.value,
-    required this.onMerge,
-  });
+  Tile({required this.value});
+
+  Tile.merged(Tile tile) : value = tile.value * 2;
+  Tile.empty(Tile tile) : value = 0;
 
   int value;
-  final void Function(int) onMerge;
 
   bool get isEmpty => value == 0;
-
-  void mergeTo(Tile tile) {
-    if (tile.value != value) {
-      return;
-    }
-
-    tile.value += value;
-    onMerge(value);
-    value = 0;
-  }
 
   Color get backgroundColor {
     switch (value) {

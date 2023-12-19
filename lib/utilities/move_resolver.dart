@@ -16,6 +16,7 @@ class MoveResolver {
   final MoveDirection swipeDirection;
 
   static const _columnCount = 4;
+  static const _rowCount = 4;
 
   // Return new state after move was made
   List<Tile> move() {
@@ -35,29 +36,22 @@ class MoveResolver {
 
   List<Tile> moveUp() => _processBoard(board);
   List<Tile> moveDown() {
+    // Flip the board by 180 degrees
     List<Tile> rotatedBoard = board.reversed.toList();
     rotatedBoard = _processBoard(rotatedBoard);
-    // Rotate back
-    return rotatedBoard.reversed.toList();
-  }
-
-  List<Tile> moveRight() {
-    List<Tile> rotatedBoard = List.generate(
-      16,
-      (_) => Tile(
-        value: 0,
-        onMerge: (_) {},
-      ),
-    );
-
-    // TODO: Rotate the board clockwise
-    // TODO: moveUp()
-    // TODO: Rotate the board back
-    return [];
+    return rotatedBoard.reversed.toList(); // Rotate back
   }
 
   List<Tile> moveLeft() {
-    return [];
+    List<Tile> rotatedBoard = rotateBoard90DegreesClockwise(board);
+    rotatedBoard = _processBoard(rotatedBoard);
+    return rotateBoard90DegreesCounterClockwise(rotatedBoard);
+  }
+
+  List<Tile> moveRight() {
+    List<Tile> rotatedBoard = rotateBoard90DegreesCounterClockwise(board);
+    rotatedBoard = _processBoard(rotatedBoard);
+    return rotateBoard90DegreesClockwise(rotatedBoard);
   }
 
   List<Tile> _processBoard(List<Tile> boardState) {
@@ -74,10 +68,18 @@ class MoveResolver {
 
       List<Tile> nonEmptyTiles = column.where((tile) => !tile.isEmpty).toList();
 
-      // Merge if possible
       for (int i = 0; i < nonEmptyTiles.length - 1; i++) {
-        if (nonEmptyTiles[i].value == nonEmptyTiles[i + 1].value) {
-          nonEmptyTiles[i + 1].mergeTo(nonEmptyTiles[i]);
+        final originalTile = nonEmptyTiles[i + 1];
+        final mergeToTile = nonEmptyTiles[i];
+
+        // Merge if values are equal
+        if (originalTile.value == mergeToTile.value) {
+          stateNotifierProviderRef
+              .read(scoreProvider.notifier)
+              .addScore(originalTile.value);
+
+          nonEmptyTiles[i] = Tile.merged(mergeToTile);
+          nonEmptyTiles[i + 1] = Tile.empty(originalTile);
         }
       }
 
@@ -88,12 +90,7 @@ class MoveResolver {
         ...nonEmptyTiles,
         ...List.generate(
           4 - nonEmptyTiles.length,
-          (_) => Tile(
-            value: 0,
-            onMerge: (value) => stateNotifierProviderRef
-                .read(scoreProvider.notifier)
-                .addScore(value),
-          ),
+          (index) => Tile(value: 0),
         ),
       ];
 
@@ -103,5 +100,29 @@ class MoveResolver {
       updatedBoardState[col + 12] = updatedColumn[3];
     }
     return updatedBoardState;
+  }
+
+  List<Tile> rotateBoard90DegreesClockwise(List<Tile> board) {
+    List<Tile> rotatedBoard = List<Tile>.filled(16, Tile(value: 0));
+
+    for (int row = 0; row < _rowCount; row++) {
+      for (int col = 0; col < _columnCount; col++) {
+        rotatedBoard[col * _columnCount + (_columnCount - row - 1)] =
+            board[row * _columnCount + col];
+      }
+    }
+    return rotatedBoard;
+  }
+
+  List<Tile> rotateBoard90DegreesCounterClockwise(List<Tile> board) {
+    List<Tile> rotatedBoard = List<Tile>.filled(16, Tile(value: 0));
+
+    for (int row = 0; row < _rowCount; row++) {
+      for (int col = 0; col < _columnCount; col++) {
+        rotatedBoard[row * _columnCount + col] =
+            board[col * _columnCount + (_columnCount - row - 1)];
+      }
+    }
+    return rotatedBoard;
   }
 }

@@ -14,19 +14,19 @@ void main() {
   group('Tile', () {
     test('should create a Tile with a given value', () {
       const value = 2;
-      final tile = Tile(value: value, onMerge: (_) {});
+      final tile = Tile(value: value);
 
       expect(tile.value, value);
     });
 
     test('should return the correct value', () {
-      final tile = Tile(value: 2, onMerge: (_) {});
+      final tile = Tile(value: 2);
 
       expect(tile.value, equals(2));
     });
 
     test('should allow updating the value', () {
-      final tile = Tile(value: 2, onMerge: (_) => {});
+      final tile = Tile(value: 2);
       const newValue = 4;
       tile.value = newValue;
 
@@ -34,51 +34,53 @@ void main() {
     });
 
     test('isEmpty returns true for a tile with value 0', () {
-      final tile = Tile(value: 0, onMerge: (_) {});
+      final tile = Tile(value: 0);
 
       expect(tile.isEmpty, equals(true));
     });
 
     test('isEmpty returns false for a tile with a non-zero value', () {
-      final tile = Tile(value: 2, onMerge: (_) {});
+      final tile = Tile(value: 2);
 
       expect(tile.isEmpty, equals(false));
     });
 
-    test('''mergeTo correctly increments the value of provided tile
+    test('''merging correctly increments the value of provided tile
      and sets the original tile value to 0''', () {
-      final originalTile = Tile(value: 2, onMerge: (_) {});
-      final mergeTotile = Tile(value: 2, onMerge: (_) {});
+      Tile originalTile = Tile(value: 2);
+      Tile mergeTotile = Tile(value: 2);
 
-      originalTile.mergeTo(mergeTotile);
+      mergeTotile = Tile.merged(mergeTotile);
+      originalTile = Tile.empty(originalTile);
 
       expect(originalTile.isEmpty, equals(true));
       expect(mergeTotile.value, equals(4));
     });
 
     test(
-        'mergeTo correctly prevents any changes if the tiles values are different',
+        'merging correctly prevents any changes if the tiles values are different',
         () {
-      final originalTile = Tile(value: 2, onMerge: (_) {});
-      final mergeTotile = Tile(value: 4, onMerge: (_) {});
+      final originalTile = Tile(value: 2);
+      final mergeTotile = Tile(value: 4);
 
-      originalTile.mergeTo(mergeTotile);
+      Tile.merged(mergeTotile);
+      Tile.empty(originalTile);
 
       expect(originalTile.value, equals(2));
       expect(mergeTotile.value, equals(4));
     });
 
-    test('mergeTo correctly increments score by the value of original tile',
+    test('merging correctly increments score by the value of original tile',
         () {
       final providerContainer = setProvider();
-      final originalTile = Tile(
-        value: 2,
-        onMerge: (value) =>
-            providerContainer.read(scoreProvider.notifier).addScore(value),
-      );
-      final mergeTotile = Tile(value: 2, onMerge: (_) {});
+      Tile originalTile = Tile(value: 2);
+      Tile mergeTotile = Tile(value: 2);
 
-      originalTile.mergeTo(mergeTotile);
+      providerContainer
+          .read(scoreProvider.notifier)
+          .addScore(originalTile.value);
+      mergeTotile = Tile.merged(mergeTotile);
+      originalTile = Tile.empty(originalTile);
 
       expect(providerContainer.read(scoreProvider)[Score.current], equals(2));
     });
