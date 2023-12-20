@@ -31,7 +31,7 @@ void main() {
     expect(textWidget.style!.color, equals(expectedColor));
   }
 
-  group('BoardTile', () {
+  group('BoardTileWidget', () {
     testWidgets(
       'displays non-zero value of provided tile',
       (widgetTester) async {

@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:my_2048/widgets/reset_button.dart';
 
 void main() {
-  group('ResetButton', () {
+  group('ResetButtonWidget', () {
     testWidgets('renders IconButton with the correct icon',
         (widgetTester) async {
       await widgetTester.pumpWidget(

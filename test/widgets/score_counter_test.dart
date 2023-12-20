@@ -24,7 +24,7 @@ void main() {
     );
   }
 
-  group('ScoreCounter', () {
+  group('ScoreCounterWidget', () {
     testWidgets('initializes with zero value', (widgetTester) async {
       await widgetTester.pumpWidget(widgetTree());
 

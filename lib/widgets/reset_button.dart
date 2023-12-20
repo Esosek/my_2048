@@ -14,7 +14,7 @@ class ResetButton extends ConsumerWidget {
       height: 60,
       child: Card(
         child: IconButton(
-          onPressed: () => ref.read(gameStateProvider.notifier).restartGame(),
+          onPressed: () => ref.read(gameStateProvider.notifier).endGame(),
           icon: const Icon(
             Icons.restart_alt_rounded,
           ),

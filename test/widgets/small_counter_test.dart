@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:my_2048/widgets/small_counter.dart';
 
 void main() {
-  group('SmallCounter', () {
+  group('SmallCounterWidget', () {
     testWidgets('displays the provided title and value', (widgetTester) async {
       const title = 'best score';
       const value = '32';
