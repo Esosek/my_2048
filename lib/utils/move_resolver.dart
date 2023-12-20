@@ -1,19 +1,14 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:my_2048/models/tile.dart';
 import 'package:my_2048/providers/board_provider.dart';
-import 'package:my_2048/providers/score_provider.dart';
 
 class MoveResolver {
   MoveResolver({
-    required this.stateNotifierProviderRef,
+    required this.onMerge,
     required this.board,
-    this.willUpdateScore = true,
   });
 
-  final StateNotifierProviderRef stateNotifierProviderRef;
+  final void Function(int value) onMerge;
   final List<Tile> board;
-  final bool willUpdateScore;
 
   static const _columnCount = 4;
   static const _rowCount = 4;
@@ -22,36 +17,36 @@ class MoveResolver {
   List<Tile> move(MoveDirection swipeDirection) {
     switch (swipeDirection) {
       case MoveDirection.up:
-        return moveUp();
+        return _moveUp();
       case MoveDirection.right:
-        return moveRight();
+        return _moveRight();
       case MoveDirection.down:
-        return moveDown();
+        return _moveDown();
       case MoveDirection.left:
-        return moveLeft();
+        return _moveLeft();
       default:
         throw Exception('Invalid swipe direction detected $swipeDirection');
     }
   }
 
-  List<Tile> moveUp() => _processBoard(board);
-  List<Tile> moveDown() {
+  List<Tile> _moveUp() => _processBoard(board);
+  List<Tile> _moveDown() {
     // Flip the board by 180 degrees
     List<Tile> rotatedBoard = board.reversed.toList();
     rotatedBoard = _processBoard(rotatedBoard);
     return rotatedBoard.reversed.toList(); // Rotate back
   }
 
-  List<Tile> moveLeft() {
-    List<Tile> rotatedBoard = rotateBoard90DegreesClockwise(board);
+  List<Tile> _moveLeft() {
+    List<Tile> rotatedBoard = _rotateBoard90DegreesClockwise(board);
     rotatedBoard = _processBoard(rotatedBoard);
-    return rotateBoard90DegreesCounterClockwise(rotatedBoard);
+    return _rotateBoard90DegreesCounterClockwise(rotatedBoard);
   }
 
-  List<Tile> moveRight() {
-    List<Tile> rotatedBoard = rotateBoard90DegreesCounterClockwise(board);
+  List<Tile> _moveRight() {
+    List<Tile> rotatedBoard = _rotateBoard90DegreesCounterClockwise(board);
     rotatedBoard = _processBoard(rotatedBoard);
-    return rotateBoard90DegreesClockwise(rotatedBoard);
+    return _rotateBoard90DegreesClockwise(rotatedBoard);
   }
 
   List<Tile> _processBoard(List<Tile> boardState) {
@@ -74,9 +69,7 @@ class MoveResolver {
 
         // Merge if values are equal
         if (originalTile.value == mergeToTile.value) {
-          stateNotifierProviderRef
-              .read(scoreProvider.notifier)
-              .addScore(originalTile.value);
+          onMerge(originalTile.value);
 
           nonEmptyTiles[i] = Tile.merged(mergeToTile);
           nonEmptyTiles[i + 1] = Tile.empty(originalTile);
@@ -102,7 +95,7 @@ class MoveResolver {
     return updatedBoardState;
   }
 
-  List<Tile> rotateBoard90DegreesClockwise(List<Tile> board) {
+  List<Tile> _rotateBoard90DegreesClockwise(List<Tile> board) {
     List<Tile> rotatedBoard = List<Tile>.filled(16, Tile(value: 0));
 
     for (int row = 0; row < _rowCount; row++) {
@@ -114,7 +107,7 @@ class MoveResolver {
     return rotatedBoard;
   }
 
-  List<Tile> rotateBoard90DegreesCounterClockwise(List<Tile> board) {
+  List<Tile> _rotateBoard90DegreesCounterClockwise(List<Tile> board) {
     List<Tile> rotatedBoard = List<Tile>.filled(16, Tile(value: 0));
 
     for (int row = 0; row < _rowCount; row++) {

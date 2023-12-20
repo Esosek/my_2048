@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_2048/providers/game_state_provider.dart';
 import 'package:my_2048/providers/moves_provider.dart';
+import 'package:my_2048/providers/score_provider.dart';
 
 import 'package:my_2048/utils/custom_logger.dart';
 import 'package:my_2048/models/tile.dart';
@@ -39,7 +40,7 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
     _log.trace('User swiped $direction');
 
     final moveResolver = MoveResolver(
-      stateNotifierProviderRef: ref,
+      onMerge: (value) => ref.read(scoreProvider.notifier).addScore(value),
       board: state,
     );
 
@@ -98,9 +99,8 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
 
   bool _isMoveAvailable() {
     final moveResolver = MoveResolver(
-      stateNotifierProviderRef: ref,
+      onMerge: (_) {},
       board: state,
-      willUpdateScore: false,
     );
 
     for (var direction in MoveDirection.values) {
