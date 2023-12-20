@@ -11,14 +11,16 @@ import 'package:my_2048/utilities/move_resolver.dart';
 enum MoveDirection { up, down, right, left }
 
 class BoardProviderNotifier extends StateNotifier<List<Tile>> {
-  BoardProviderNotifier(this._ref) : super([]) {
+  BoardProviderNotifier(this.ref) : super([]) {
     initializeBoard();
   }
 
   // For unit test
-  BoardProviderNotifier.withEmptyValue(this._ref) : super([]);
+  BoardProviderNotifier.withValue(
+      {required this.ref, required List<Tile> initialValue})
+      : super(initialValue);
 
-  final StateNotifierProviderRef _ref;
+  final StateNotifierProviderRef ref;
 
   final _log = CustomLogger('BoardProvider');
   final _random = Random();
@@ -37,7 +39,7 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
     _log.trace('User swiped $direction');
 
     final moveResolver = MoveResolver(
-      stateNotifierProviderRef: _ref,
+      stateNotifierProviderRef: ref,
       board: state,
     );
 
@@ -47,12 +49,12 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
     if (_didBoardChange(boardAfterMove)) {
       _log.trace('Board did change');
       state = boardAfterMove;
-      _ref.read(movesProvider.notifier).addMove();
+      ref.read(movesProvider.notifier).addMove();
       _generateNewTile();
     }
 
     if (!_isMoveAvailable()) {
-      _ref.read(gameStateProvider.notifier).endGame();
+      ref.read(gameStateProvider.notifier).endGame();
     }
   }
 
@@ -96,7 +98,7 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
 
   bool _isMoveAvailable() {
     final moveResolver = MoveResolver(
-      stateNotifierProviderRef: _ref,
+      stateNotifierProviderRef: ref,
       board: state,
       willUpdateScore: false,
     );

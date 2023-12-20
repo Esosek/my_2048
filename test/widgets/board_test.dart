@@ -30,7 +30,8 @@ void main() {
       (widgetTester) async {
         final providerContainer = ProviderContainer(overrides: [
           boardProvider.overrideWith(
-            (ref) => BoardProviderNotifier.withEmptyValue(ref),
+            (ref) =>
+                BoardProviderNotifier.withValue(ref: ref, initialValue: []),
           ),
         ]);
         addTearDown(() => providerContainer.dispose());
