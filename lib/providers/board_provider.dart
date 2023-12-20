@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_2048/providers/game_state_provider.dart';
 import 'package:my_2048/providers/moves_provider.dart';
 
-import 'package:my_2048/utilities/custom_logger.dart';
+import 'package:my_2048/utils/custom_logger.dart';
 import 'package:my_2048/models/tile.dart';
-import 'package:my_2048/utilities/move_resolver.dart';
+import 'package:my_2048/utils/move_resolver.dart';
 
 enum MoveDirection { up, down, right, left }
 

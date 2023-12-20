@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_2048/providers/board_provider.dart';
 import 'package:my_2048/providers/moves_provider.dart';
 import 'package:my_2048/providers/score_provider.dart';
-import 'package:my_2048/utilities/custom_logger.dart';
+import 'package:my_2048/utils/custom_logger.dart';
 
 enum GameState { active, ended }
 
