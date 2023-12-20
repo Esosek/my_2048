@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_2048/providers/game_state_provider.dart';
 import 'package:my_2048/providers/moves_provider.dart';
 
 import 'package:my_2048/utilities/custom_logger.dart';
@@ -38,16 +39,20 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
     final moveResolver = MoveResolver(
       stateNotifierProviderRef: _ref,
       board: state,
-      swipeDirection: direction,
     );
 
-    final boardAfterMove = moveResolver.move();
+    final boardAfterMove = moveResolver.move(direction);
 
     // Move successful
     if (_didBoardChange(boardAfterMove)) {
+      _log.trace('Board did change');
       state = boardAfterMove;
       _ref.read(movesProvider.notifier).addMove();
       _generateNewTile();
+    }
+
+    if (!_isMoveAvailable()) {
+      _ref.read(gameStateProvider.notifier).endGame();
     }
   }
 
@@ -62,9 +67,7 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
       state = newState;
 
       _log.trace(
-          'Tile generated with index: $emptyTileIndex and value: $generatedValue');
-
-      _checkGameOver();
+          'New tile generated with index: $emptyTileIndex and value: $generatedValue');
     } catch (error) {
       _log.error(error.toString());
     }
@@ -85,16 +88,28 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
   bool _didBoardChange(List<Tile> newBoard) {
     for (var i = 0; i < newBoard.length; i++) {
       if (newBoard[i].value != state[i].value) {
-        _log.trace('Board did change');
         return true;
       }
     }
-    _log.trace('Board did NOT change');
     return false;
   }
 
-  void _checkGameOver() {
-    // TODO: Implement checkGameOver
+  bool _isMoveAvailable() {
+    final moveResolver = MoveResolver(
+      stateNotifierProviderRef: _ref,
+      board: state,
+      willUpdateScore: false,
+    );
+
+    for (var direction in MoveDirection.values) {
+      final newBoard = moveResolver.move(direction);
+      if (_didBoardChange(newBoard)) {
+        _log.trace('Moves still available');
+        return true;
+      }
+    }
+    _log.trace('No more available moves');
+    return false;
   }
 }
 

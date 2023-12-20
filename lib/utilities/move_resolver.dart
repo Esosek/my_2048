@@ -8,18 +8,18 @@ class MoveResolver {
   MoveResolver({
     required this.stateNotifierProviderRef,
     required this.board,
-    required this.swipeDirection,
+    this.willUpdateScore = true,
   });
 
   final StateNotifierProviderRef stateNotifierProviderRef;
   final List<Tile> board;
-  final MoveDirection swipeDirection;
+  final bool willUpdateScore;
 
   static const _columnCount = 4;
   static const _rowCount = 4;
 
   // Return new state after move was made
-  List<Tile> move() {
+  List<Tile> move(MoveDirection swipeDirection) {
     switch (swipeDirection) {
       case MoveDirection.up:
         return moveUp();
