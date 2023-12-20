@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:my_2048/components/board_tile.dart';
+import 'package:my_2048/widgets/board_tile.dart';
 import 'package:my_2048/providers/board_provider.dart';
 
 class Board extends ConsumerWidget {

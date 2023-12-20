@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:my_2048/components/small_counter.dart';
+import 'package:my_2048/widgets/small_counter.dart';
 
 void main() {
   group('SmallCounter', () {

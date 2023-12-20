@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:my_2048/components/score_counter.dart';
+import 'package:my_2048/widgets/score_counter.dart';
 import 'package:my_2048/providers/game_state_provider.dart';
 import 'package:my_2048/providers/score_provider.dart';
 

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:my_2048/components/reset_button.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_2048/providers/score_provider.dart';
 
-class EndOverlay extends StatelessWidget {
+import 'package:my_2048/widgets/reset_button.dart';
+
+class EndOverlay extends ConsumerWidget {
   const EndOverlay({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final finalScore = ref.watch(scoreProvider)[Score.current];
     return Positioned.fill(
       child: Card(
         color: const Color.fromARGB(190, 237, 207, 115),
@@ -20,7 +24,7 @@ class EndOverlay extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              'Score: 8',
+              'Final score: $finalScore',
               style: Theme.of(context).textTheme.labelLarge!.copyWith(
                     color: Theme.of(context).colorScheme.onPrimary,
                     fontSize: 17,

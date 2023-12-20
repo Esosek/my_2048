@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:my_2048/components/board_tile.dart';
+import 'package:my_2048/widgets/board_tile.dart';
 import 'package:my_2048/models/tile.dart';
 
 void main() {

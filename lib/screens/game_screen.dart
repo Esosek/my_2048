@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:my_2048/components/board.dart';
-import 'package:my_2048/components/end_overlay.dart';
-import 'package:my_2048/components/reset_button.dart';
-import 'package:my_2048/components/score_counter.dart';
-import 'package:my_2048/components/small_counter.dart';
+import 'package:my_2048/widgets/board.dart';
+import 'package:my_2048/widgets/end_overlay.dart';
+import 'package:my_2048/widgets/reset_button.dart';
+import 'package:my_2048/widgets/score_counter.dart';
+import 'package:my_2048/widgets/small_counter.dart';
 import 'package:my_2048/providers/board_provider.dart';
 import 'package:my_2048/providers/game_state_provider.dart';
 import 'package:my_2048/providers/moves_provider.dart';
