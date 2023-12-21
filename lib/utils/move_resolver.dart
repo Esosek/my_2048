@@ -50,15 +50,15 @@ class MoveResolver {
   }
 
   List<Tile> _processBoard(List<Tile> boardState) {
-    List<Tile> updatedBoardState = [...boardState];
-
+    List<Tile> updatedBoardState =
+        boardState.map((tile) => Tile(value: tile.value)).toList();
     // Loop each column
     for (var col = 0; col < _columnCount; col++) {
       List<Tile> column = [
-        boardState[col],
-        boardState[col + 4],
-        boardState[col + 8],
-        boardState[col + 12],
+        updatedBoardState[col],
+        updatedBoardState[col + 4],
+        updatedBoardState[col + 8],
+        updatedBoardState[col + 12],
       ];
 
       List<Tile> nonEmptyTiles = column.where((tile) => !tile.isEmpty).toList();
@@ -81,7 +81,10 @@ class MoveResolver {
       // Fill the rest of the column with empty tiles
       List<Tile> updatedColumn = [
         ...nonEmptyTiles,
-        ...List.filled(4 - nonEmptyTiles.length, const Tile(value: 0)),
+        ...List.generate(
+          4 - nonEmptyTiles.length,
+          (index) => const Tile(value: 0),
+        ),
       ];
 
       updatedBoardState[col] = updatedColumn[0];

@@ -3,24 +3,19 @@ import 'package:flutter/material.dart';
 class Tile {
   const Tile({
     required this.value,
-    this.originalBoardIndex,
-    this.newBoardIndex,
+    this.isGenerated = false,
   });
 
-  Tile.merged(
-    Tile tile, {
-    this.originalBoardIndex,
-  })  : value = tile.value * 2,
-        newBoardIndex = tile.originalBoardIndex;
+  Tile.merged(Tile tile)
+      : value = tile.value * 2,
+        isGenerated = false;
 
   const Tile.empty(Tile tile)
       : value = 0,
-        originalBoardIndex = null,
-        newBoardIndex = null;
+        isGenerated = false;
 
   final int value;
-  final int? originalBoardIndex;
-  final int? newBoardIndex;
+  final bool isGenerated;
 
   bool get isEmpty => value == 0;
 

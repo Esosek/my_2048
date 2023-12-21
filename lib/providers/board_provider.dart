@@ -28,7 +28,13 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
 
   // Prepares a new board with 2 non-empty tiles
   void initializeBoard() {
-    state = List.filled(16, const Tile(value: 0));
+    state = List.generate(
+      16,
+      (index) => const Tile(
+        value: 0,
+        isGenerated: true,
+      ),
+    );
 
     _generateNewTile();
     _generateNewTile();
@@ -65,7 +71,11 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
     try {
       final emptyTileIndex = _randomEmptyTileIndex;
       final newState = List<Tile>.from(state);
-      newState[emptyTileIndex] = Tile(value: generatedValue);
+
+      newState[emptyTileIndex] = Tile(
+        value: generatedValue,
+        isGenerated: true,
+      );
 
       state = newState;
 
