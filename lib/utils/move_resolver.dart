@@ -81,10 +81,7 @@ class MoveResolver {
       // Fill the rest of the column with empty tiles
       List<Tile> updatedColumn = [
         ...nonEmptyTiles,
-        ...List.generate(
-          4 - nonEmptyTiles.length,
-          (index) => Tile(value: 0),
-        ),
+        ...List.filled(4 - nonEmptyTiles.length, const Tile(value: 0)),
       ];
 
       updatedBoardState[col] = updatedColumn[0];
@@ -96,7 +93,7 @@ class MoveResolver {
   }
 
   List<Tile> _rotateBoard90DegreesClockwise(List<Tile> board) {
-    List<Tile> rotatedBoard = List<Tile>.filled(16, Tile(value: 0));
+    List<Tile> rotatedBoard = List<Tile>.filled(16, const Tile(value: 0));
 
     for (int row = 0; row < _rowCount; row++) {
       for (int col = 0; col < _columnCount; col++) {
@@ -108,7 +105,7 @@ class MoveResolver {
   }
 
   List<Tile> _rotateBoard90DegreesCounterClockwise(List<Tile> board) {
-    List<Tile> rotatedBoard = List<Tile>.filled(16, Tile(value: 0));
+    List<Tile> rotatedBoard = List<Tile>.filled(16, const Tile(value: 0));
 
     for (int row = 0; row < _rowCount; row++) {
       for (int col = 0; col < _columnCount; col++) {

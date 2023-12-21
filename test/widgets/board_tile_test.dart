@@ -36,7 +36,7 @@ void main() {
       'displays non-zero value of provided tile',
       (widgetTester) async {
         await widgetTester.pumpWidget(widgetTreeWithTile(
-          Tile(value: 4),
+          const Tile(value: 4),
         ));
 
         expect(find.text('4'), findsOneWidget);
@@ -47,7 +47,7 @@ void main() {
       'does not display any text when tile value is zero',
       (widgetTester) async {
         await widgetTester.pumpWidget(widgetTreeWithTile(
-          Tile(value: 0),
+          const Tile(value: 0),
         ));
 
         expect(find.byType(Text), findsNothing);
@@ -58,7 +58,7 @@ void main() {
       'displays dark text when provided tile value is 2',
       (widgetTester) async {
         await widgetTester.pumpWidget(widgetTreeWithTile(
-          Tile(value: 2),
+          const Tile(value: 2),
         ));
 
         const expectedColor = Color.fromARGB(255, 118, 109, 101);
@@ -70,7 +70,7 @@ void main() {
       'displays dark text when provided tile value is 4',
       (widgetTester) async {
         await widgetTester.pumpWidget(widgetTreeWithTile(
-          Tile(value: 4),
+          const Tile(value: 4),
         ));
 
         const expectedColor = Color.fromARGB(255, 118, 109, 101);
@@ -82,7 +82,7 @@ void main() {
       'displays light text when provided tile value is bigger than 4',
       (widgetTester) async {
         await widgetTester.pumpWidget(widgetTreeWithTile(
-          Tile(value: 8),
+          const Tile(value: 8),
         ));
 
         final expectedColor = theme.colorScheme.onPrimary;

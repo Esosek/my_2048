@@ -38,7 +38,7 @@ void main() {
     test('''state is correctly updated
      when move in provided direction changed board''', () {
       final providerContainer = getMockProviderContainer(
-        List.filled(16, Tile(value: 2)),
+        List.filled(16, const Tile(value: 2)),
       );
 
       providerContainer

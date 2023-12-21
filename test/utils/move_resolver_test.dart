@@ -135,7 +135,6 @@ void main() {
 
     test('''correctly returns same board
      when move in provided direction is not possible''', () {
-      // TODO: Implement
       final moveResolver = MoveResolver(
           onMerge: (_) {},
           board: setBoard([

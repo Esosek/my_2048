@@ -28,7 +28,7 @@ class BoardProviderNotifier extends StateNotifier<List<Tile>> {
 
   // Prepares a new board with 2 non-empty tiles
   void initializeBoard() {
-    state = List.filled(16, Tile(value: 0));
+    state = List.filled(16, const Tile(value: 0));
 
     _generateNewTile();
     _generateNewTile();

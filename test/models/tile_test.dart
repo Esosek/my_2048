@@ -14,41 +14,33 @@ void main() {
   group('Tile', () {
     test('should create a Tile with a given value', () {
       const value = 2;
-      final tile = Tile(value: value);
+      const tile = Tile(value: value);
 
       expect(tile.value, value);
     });
 
     test('should return the correct value', () {
-      final tile = Tile(value: 2);
+      const tile = Tile(value: 2);
 
       expect(tile.value, equals(2));
     });
 
-    test('should allow updating the value', () {
-      final tile = Tile(value: 2);
-      const newValue = 4;
-      tile.value = newValue;
-
-      expect(tile.value, equals(newValue));
-    });
-
     test('isEmpty returns true for a tile with value 0', () {
-      final tile = Tile(value: 0);
+      const tile = Tile(value: 0);
 
       expect(tile.isEmpty, equals(true));
     });
 
     test('isEmpty returns false for a tile with a non-zero value', () {
-      final tile = Tile(value: 2);
+      const tile = Tile(value: 2);
 
       expect(tile.isEmpty, equals(false));
     });
 
     test('''merging correctly increments the value of provided tile
      and sets the original tile value to 0''', () {
-      Tile originalTile = Tile(value: 2);
-      Tile mergeTotile = Tile(value: 2);
+      Tile originalTile = const Tile(value: 2);
+      Tile mergeTotile = const Tile(value: 2);
 
       mergeTotile = Tile.merged(mergeTotile);
       originalTile = Tile.empty(originalTile);
@@ -60,11 +52,11 @@ void main() {
     test(
         'merging correctly prevents any changes if the tiles values are different',
         () {
-      final originalTile = Tile(value: 2);
-      final mergeTotile = Tile(value: 4);
+      const originalTile = Tile(value: 2);
+      const mergeTotile = Tile(value: 4);
 
       Tile.merged(mergeTotile);
-      Tile.empty(originalTile);
+      const Tile.empty(originalTile);
 
       expect(originalTile.value, equals(2));
       expect(mergeTotile.value, equals(4));
@@ -73,8 +65,8 @@ void main() {
     test('merging correctly increments score by the value of original tile',
         () {
       final providerContainer = setProvider();
-      Tile originalTile = Tile(value: 2);
-      Tile mergeTotile = Tile(value: 2);
+      Tile originalTile = const Tile(value: 2);
+      Tile mergeTotile = const Tile(value: 2);
 
       providerContainer
           .read(scoreProvider.notifier)
